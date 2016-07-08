@@ -1,0 +1,20 @@
+{
+  "name": "elm-2048",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "webpack-dev-server --hot --inline --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "css-loader": "0.23.1",
+    "elm-hot-loader": "0.3.2",
+    "elm-webpack-loader": "3.0.2",
+    "file-loader": "0.8.5",
+    "node-sass": "3.7.0",
+    "sass-loader": "3.2.0",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-dev-server": "1.14.1",
+    "webpack-hot-middleware": "2.10.0"
+  }
+}
