@@ -1,3 +1,56 @@
 body {
   font-family: "Source Sans Pro", sans-serif;
 }
+
+$cell-size: 105px;
+$border-size: 10px;
+$border-radius: 3px;
+
+.game {
+  background: red;
+  border-radius: $border-radius * 2;
+  padding: $border-size;
+  position: absolute;
+
+  &__row {
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: $border-size;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__cell {
+    border-radius: $border-radius;
+    height: $cell-size;
+    width: $cell-size;
+    background: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $border-size;
+
+    font-size: 42px;
+    font-weight: bold;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &--2 {
+      background: black;
+      color: white;
+    }
+
+    &--4 {
+      background: white;
+      color: black;
+    }
+
+    &--empty {
+      background: pink;
+    }
+  }
+}
