@@ -15,3 +15,8 @@ Run it:
 ```sh
 $ npm start
 ```
+
+To run the tests you do:
+```sh
+$ npm test
+```

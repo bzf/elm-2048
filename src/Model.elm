@@ -1,4 +1,4 @@
-module Model exposing (Model, Point, new, update, addCell)
+module Model exposing (Model, Point, new, update, addCell, availableCells)
 
 import Dict exposing (Dict)
 import List.Extra
@@ -85,14 +85,11 @@ moveEverything direction game =
                     List.indexedMap
                         (\i cell ->
                             ( ( i, (snd (fst cell)) ), (snd cell) )
-                                |> Debug.log "moveRow"
                         )
 
                 grid' =
                     rows game
-                        |> Debug.log "moveEverything before"
                         |> List.map moveRow
-                        |> Debug.log "moveEverything after"
                         |> List.concat
                         |> Dict.fromList
             in
@@ -104,16 +101,13 @@ moveEverything direction game =
                     List.indexedMap
                         (\i cell ->
                             ( ( 3 - i, (snd (fst cell)) ), (snd cell) )
-                                |> Debug.log "moveRow"
                         )
 
                 grid' =
                     rows game
-                        |> Debug.log "moveEverything before"
                         |> List.map List.reverse
                         |> List.map moveRow
                         |> List.map List.reverse
-                        |> Debug.log "moveEverything after"
                         |> List.concat
                         |> Dict.fromList
             in
@@ -125,14 +119,11 @@ moveEverything direction game =
                     List.indexedMap
                         (\i cell ->
                             ( ( (fst (fst cell)), i ), (snd cell) )
-                                |> Debug.log "moveRow"
                         )
 
                 grid' =
                     columns game
-                        |> Debug.log "moveEverything before"
                         |> List.map moveRow
-                        |> Debug.log "moveEverything after"
                         |> List.concat
                         |> Dict.fromList
             in
@@ -144,16 +135,13 @@ moveEverything direction game =
                     List.indexedMap
                         (\i cell ->
                             ( ( (fst (fst cell)), 3 - i ), (snd cell) )
-                                |> Debug.log "moveRow"
                         )
 
                 grid' =
                     columns game
-                        |> Debug.log "moveEverything before"
                         |> List.map List.reverse
                         |> List.map moveRow
                         |> List.map List.reverse
-                        |> Debug.log "moveEverything after"
                         |> List.concat
                         |> Dict.fromList
             in
@@ -170,7 +158,6 @@ handleLeft game =
             List.map mergeCells currentRows
                 |> List.concat
                 |> Dict.fromList
-                |> Debug.log "nextRows"
     in
         { game | grid = grid' }
 
@@ -185,7 +172,6 @@ handleRight game =
             List.map mergeCells currentRows
                 |> List.concat
                 |> Dict.fromList
-                |> Debug.log "nextRows"
     in
         { game | grid = grid' }
 
@@ -200,7 +186,6 @@ handleUp game =
             List.map mergeCellsVertical currentColumns
                 |> List.concat
                 |> Dict.fromList
-                |> Debug.log "nextRows"
     in
         { game | grid = grid' }
 
@@ -215,7 +200,6 @@ handleDown game =
             List.map mergeCellsVertical currentColumns
                 |> List.concat
                 |> Dict.fromList
-                |> Debug.log "nextRows"
     in
         { game | grid = grid' }
 
@@ -256,24 +240,18 @@ columns : Model -> List (List ( Point, Int ))
 columns game =
     game.grid
         |> Dict.toList
-        |> Debug.log "columns before"
         |> List.sortBy (\cell -> fst (fst cell))
-        |> Debug.log "columns after"
         |> List.Extra.groupWhile (\c1 c2 -> (fst (fst c1)) == (fst (fst c2)))
         |> List.map (List.sortBy (\cell -> fst (fst cell)))
-        |> Debug.log "columns"
 
 
 rows : Model -> List (List ( Point, Int ))
 rows game =
     game.grid
         |> Dict.toList
-        |> Debug.log "rows before"
         |> List.sortBy (\cell -> snd (fst cell))
-        |> Debug.log "rows after"
         |> List.Extra.groupWhile (\c1 c2 -> (snd (fst c1)) == (snd (fst c2)))
         |> List.map (List.sortBy (\cell -> fst (fst cell)))
-        |> Debug.log "rows"
 
 
 addCell : Int -> Model -> Model
@@ -286,10 +264,9 @@ addCell randomIndex game =
                 |> Maybe.withDefault ( 0, 0 )
 
         grid' =
-            Dict.insert (Debug.log "addCell" point) 2 game.grid
+            Dict.insert point 2 game.grid
     in
         { game | grid = grid' }
-            |> Debug.log "addCell"
 
 
 availableCells : Model -> List Point
@@ -298,10 +275,3 @@ availableCells game =
         (List.repeat 4 [0..3] |> List.concat)
         (List.map (List.repeat 4) [0..3] |> List.concat)
         |> List.filter (\point -> not <| Dict.member point game.grid)
-        |> Debug.log "availableCells"
-
-
-isPointOccupied : Point -> Model -> Bool
-isPointOccupied point game =
-    Dict.member (Debug.log "isPointOccupied" point) game.grid
-        |> Debug.log "isPointOccupied"
