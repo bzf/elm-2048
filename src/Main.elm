@@ -3,7 +3,6 @@ module Main exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.App as Html
-import Time exposing (second)
 import Keyboard exposing (KeyCode)
 import Dict exposing (Dict)
 import Direction exposing (Direction(..))
@@ -42,8 +41,7 @@ update message model =
 subscriptions : Model -> Sub Action
 subscriptions model =
     Sub.batch
-        [ Time.every second (always Tick)
-        , Keyboard.downs (onKeyDown False model)
+        [ Keyboard.downs (onKeyDown False model)
         ]
 
 

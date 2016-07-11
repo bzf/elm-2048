@@ -4,7 +4,6 @@ import Direction exposing (Direction)
 
 
 type Action
-    = Tick
-    | OnMove Direction
+    = OnMove Direction
     | AddCell (Int)
     | Noop
