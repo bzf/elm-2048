@@ -4,27 +4,23 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Action exposing (Action)
 import Dict
-import Game
-
-
-type alias Model =
-    Game.Game
+import Model exposing (Model)
 
 
 type alias Cell =
-    ( Game.Point, Int )
+    ( Model.Point, Int )
 
 
 view : Model -> Html Action
 view model =
     div []
         [ h1 [] [ text "elm-2048" ]
-        , drawGame <| Dict.toList model.grid
+        , drawModel <| Dict.toList model.grid
         ]
 
 
-drawGame : List Cell -> Html Action
-drawGame cells =
+drawModel : List Cell -> Html Action
+drawModel cells =
     let
         filterRow index =
             List.filter (\( ( x, y ), _ ) -> y == index)

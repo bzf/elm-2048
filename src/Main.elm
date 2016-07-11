@@ -8,7 +8,7 @@ import Keyboard exposing (KeyCode)
 import Dict exposing (Dict)
 import Direction exposing (Direction(..))
 import Action exposing (Action(..))
-import Game
+import Model exposing (Model)
 import View
 
 
@@ -21,23 +21,19 @@ main =
         }
 
 
-type alias Model =
-    Game.Game
-
-
 init : ( Model, Cmd Action )
 init =
-    ( Game.new, Cmd.none )
+    ( Model.new, Cmd.none )
 
 
 update : Action -> Model -> ( Model, Cmd Action )
 update message model =
     case message of
         OnMove direction ->
-            Game.update model direction
+            Model.update model direction
 
         AddCell randomIndex ->
-            ( Game.addCell randomIndex model, Cmd.none )
+            ( Model.addCell randomIndex model, Cmd.none )
 
         _ ->
             ( model, Cmd.none )

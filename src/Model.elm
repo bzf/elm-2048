@@ -1,4 +1,4 @@
-module Game exposing (..)
+module Model exposing (Model, Point, new, update, addCell)
 
 import Dict exposing (Dict)
 import List.Extra
@@ -12,13 +12,13 @@ type alias Point =
     ( Int, Int )
 
 
-type alias Game =
+type alias Model =
     { grid : Dict Point Int
     , lastMove : Maybe Direction
     }
 
 
-new : Game
+new : Model
 new =
     { grid = newGrid
     , lastMove = Nothing
@@ -33,7 +33,7 @@ newGrid =
         |> Dict.insert ( 2, 0 ) 2
 
 
-update : Game -> Direction -> ( Game, Cmd Action )
+update : Model -> Direction -> ( Model, Cmd Action )
 update model direction =
     let
         model' =
@@ -44,19 +44,19 @@ update model direction =
         triggerAddCell model'
 
 
-triggerAddCell : Game -> ( Game, Cmd Action )
+triggerAddCell : Model -> ( Model, Cmd Action )
 triggerAddCell game =
     ( game
     , Random.generate AddCell (Random.int 0 (List.length (availableCells game) - 1))
     )
 
 
-setLastMove : Direction -> Game -> Game
+setLastMove : Direction -> Model -> Model
 setLastMove direction model =
     { model | lastMove = Just direction }
 
 
-handleMove : Direction -> Game -> Game
+handleMove : Direction -> Model -> Model
 handleMove direction model =
     case direction of
         Left ->
@@ -76,7 +76,7 @@ handleMove direction model =
                 |> moveEverything Down
 
 
-moveEverything : Direction -> Game -> Game
+moveEverything : Direction -> Model -> Model
 moveEverything direction game =
     case direction of
         Left ->
@@ -160,7 +160,7 @@ moveEverything direction game =
                 { game | grid = grid' }
 
 
-handleLeft : Game -> Game
+handleLeft : Model -> Model
 handleLeft game =
     let
         currentRows =
@@ -175,7 +175,7 @@ handleLeft game =
         { game | grid = grid' }
 
 
-handleRight : Game -> Game
+handleRight : Model -> Model
 handleRight game =
     let
         currentRows =
@@ -190,7 +190,7 @@ handleRight game =
         { game | grid = grid' }
 
 
-handleUp : Game -> Game
+handleUp : Model -> Model
 handleUp game =
     let
         currentColumns =
@@ -205,7 +205,7 @@ handleUp game =
         { game | grid = grid' }
 
 
-handleDown : Game -> Game
+handleDown : Model -> Model
 handleDown game =
     let
         currentColumns =
@@ -252,7 +252,7 @@ mergeCells list =
                 List.append [ x ] (mergeCells (y :: rest))
 
 
-columns : Game -> List (List ( Point, Int ))
+columns : Model -> List (List ( Point, Int ))
 columns game =
     game.grid
         |> Dict.toList
@@ -264,7 +264,7 @@ columns game =
         |> Debug.log "columns"
 
 
-rows : Game -> List (List ( Point, Int ))
+rows : Model -> List (List ( Point, Int ))
 rows game =
     game.grid
         |> Dict.toList
@@ -276,7 +276,7 @@ rows game =
         |> Debug.log "rows"
 
 
-addCell : Int -> Game -> Game
+addCell : Int -> Model -> Model
 addCell randomIndex game =
     let
         point =
@@ -292,7 +292,7 @@ addCell randomIndex game =
             |> Debug.log "addCell"
 
 
-availableCells : Game -> List Point
+availableCells : Model -> List Point
 availableCells game =
     List.Extra.zip
         (List.repeat 4 [0..3] |> List.concat)
@@ -301,7 +301,7 @@ availableCells game =
         |> Debug.log "availableCells"
 
 
-isPointOccupied : Point -> Game -> Bool
+isPointOccupied : Point -> Model -> Bool
 isPointOccupied point game =
     Dict.member (Debug.log "isPointOccupied" point) game.grid
         |> Debug.log "isPointOccupied"
