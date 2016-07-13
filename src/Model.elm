@@ -1,4 +1,4 @@
-module Model exposing (Model, Point, new, update, addCell, availableCells)
+module Model exposing (Model, Point, new, update, addCell, availableCells, rows, columns)
 
 import Dict exposing (Dict)
 import List.Extra
@@ -12,8 +12,12 @@ type alias Point =
     ( Int, Int )
 
 
+type alias Grid =
+    Dict Point Int
+
+
 type alias Model =
-    { grid : Dict Point Int
+    { grid : Grid
     , lastMove : Maybe Direction
     }
 
@@ -25,7 +29,7 @@ new =
     }
 
 
-newGrid : Dict Point Int
+newGrid : Grid
 newGrid =
     -- TODO: Randomize the starting points
     Dict.empty
@@ -88,7 +92,7 @@ moveEverything direction game =
                         )
 
                 grid' =
-                    rows game
+                    rows game.grid
                         |> List.map moveRow
                         |> List.concat
                         |> Dict.fromList
@@ -104,7 +108,7 @@ moveEverything direction game =
                         )
 
                 grid' =
-                    rows game
+                    rows game.grid
                         |> List.map List.reverse
                         |> List.map moveRow
                         |> List.map List.reverse
@@ -122,7 +126,7 @@ moveEverything direction game =
                         )
 
                 grid' =
-                    columns game
+                    columns game.grid
                         |> List.map moveRow
                         |> List.concat
                         |> Dict.fromList
@@ -138,7 +142,7 @@ moveEverything direction game =
                         )
 
                 grid' =
-                    columns game
+                    columns game.grid
                         |> List.map List.reverse
                         |> List.map moveRow
                         |> List.map List.reverse
@@ -152,7 +156,7 @@ handleLeft : Model -> Model
 handleLeft game =
     let
         currentRows =
-            rows game
+            rows game.grid
 
         grid' =
             List.map mergeCells currentRows
@@ -166,7 +170,7 @@ handleRight : Model -> Model
 handleRight game =
     let
         currentRows =
-            rows game
+            rows game.grid
 
         grid' =
             List.map mergeCells currentRows
@@ -180,7 +184,7 @@ handleUp : Model -> Model
 handleUp game =
     let
         currentColumns =
-            columns game
+            columns game.grid
 
         grid' =
             List.map mergeCellsVertical currentColumns
@@ -194,7 +198,7 @@ handleDown : Model -> Model
 handleDown game =
     let
         currentColumns =
-            columns game
+            columns game.grid
 
         grid' =
             List.map mergeCellsVertical currentColumns
@@ -236,22 +240,26 @@ mergeCells list =
                 List.append [ x ] (mergeCells (y :: rest))
 
 
-columns : Model -> List (List ( Point, Int ))
-columns game =
-    game.grid
+columns : Grid -> List (List ( Point, Int ))
+columns grid =
+    grid
         |> Dict.toList
         |> List.sortBy (\cell -> fst (fst cell))
         |> List.Extra.groupWhile (\c1 c2 -> (fst (fst c1)) == (fst (fst c2)))
-        |> List.map (List.sortBy (\cell -> fst (fst cell)))
+        |> List.map (List.sortBy (\cell -> snd (fst cell)))
 
 
-rows : Model -> List (List ( Point, Int ))
-rows game =
-    game.grid
-        |> Dict.toList
-        |> List.sortBy (\cell -> snd (fst cell))
-        |> List.Extra.groupWhile (\c1 c2 -> (snd (fst c1)) == (snd (fst c2)))
-        |> List.map (List.sortBy (\cell -> fst (fst cell)))
+rows : Grid -> List (List ( Point, Int ))
+rows grid =
+    let
+        sortRow =
+            List.sortBy (\cell -> fst (fst cell))
+    in
+        grid
+            |> Dict.toList
+            |> List.sortBy (\cell -> snd (fst cell))
+            |> List.Extra.groupWhile (\c1 c2 -> (snd (fst c1)) == (snd (fst c2)))
+            |> List.map sortRow
 
 
 addCell : Int -> Model -> Model
