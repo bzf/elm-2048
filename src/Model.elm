@@ -173,7 +173,9 @@ handleRight game =
             rows game.grid
 
         grid' =
-            List.map mergeCells currentRows
+            currentRows
+                |> List.map List.reverse
+                |> List.map mergeCells
                 |> List.concat
                 |> Dict.fromList
     in
@@ -199,9 +201,12 @@ handleDown game =
     let
         currentColumns =
             columns game.grid
+                |> List.reverse
 
         grid' =
-            List.map mergeCellsVertical currentColumns
+            currentColumns
+                |> List.map List.reverse
+                |> List.map mergeCellsVertical
                 |> List.concat
                 |> Dict.fromList
     in
