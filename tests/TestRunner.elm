@@ -2,11 +2,15 @@ module Main exposing (..)
 
 import ElmTest exposing (..)
 import ModelTest exposing (..)
+import GridTest exposing (..)
 
 
 tests : Test
 tests =
-    ModelTest.tests
+    suite "Test suite"
+        [ ModelTest.tests
+        , GridTest.tests
+        ]
 
 
 main : Program Never

@@ -5,10 +5,11 @@ import Html.Attributes exposing (..)
 import Action exposing (Action)
 import Dict
 import Model exposing (Model)
+import Grid exposing (Point)
 
 
 type alias Cell =
-    ( Model.Point, Int )
+    ( Point, Int )
 
 
 view : Model -> Html Action

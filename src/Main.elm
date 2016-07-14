@@ -9,6 +9,7 @@ import Direction exposing (Direction(..))
 import Action exposing (Action(..))
 import Model exposing (Model)
 import View
+import Grid exposing (Grid, Point)
 
 
 main =
@@ -22,7 +23,7 @@ main =
 
 init : ( Model, Cmd Action )
 init =
-    ( Model.new, Cmd.none )
+    Model.triggerAddCell Model.new
 
 
 update : Action -> Model -> ( Model, Cmd Action )
@@ -32,9 +33,24 @@ update message model =
             Model.update model direction
 
         AddCell randomIndex ->
-            ( Model.addCell randomIndex model, Cmd.none )
+            Grid.availableCells model.grid
+                |> List.drop randomIndex
+                |> List.head
+                |> addPoint model
 
         _ ->
+            ( model, Cmd.none )
+
+
+addPoint : Model -> Maybe Point -> ( Model, Cmd Action )
+addPoint model point =
+    case point of
+        Just point' ->
+            ( { model | grid = Grid.addPointToGrid model.grid point' }
+            , Cmd.none
+            )
+
+        Nothing ->
             ( model, Cmd.none )
 
 
