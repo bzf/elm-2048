@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "webpack-dev-server --hot --inline --host 0.0.0.0",
-    "test": "elm-make tests/TestRunner.elm --output test.js && node test.js"
+    "test": "elm-make tests/TestRunner.elm --output /tmp/test.js && node /tmp/test.js"
   },
   "devDependencies": {
     "css-loader": "0.23.1",

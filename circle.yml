@@ -1,0 +1,17 @@
+dependencies:
+  cache_directories:
+    - elm-stuff/build-artifacts
+    - node_modules
+
+  post:
+    - npm i -g elm
+    - elm-package install -y
+
+    # Build the project once so that we can cache the build artifacts inside
+    # `elm-stuff/build-artifacts`
+    - elm-make src/Main.elm --output /tmp/main.js
+    - elm-make tests/TestRunner.elm --output /tmp/tests.js
+
+test:
+  override:
+    - npm test
