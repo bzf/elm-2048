@@ -6,6 +6,16 @@ $cell-size: 105px;
 $border-size: 10px;
 $border-radius: 3px;
 
+.btn {
+  background: white;
+  border-radius: $border-radius;
+  border: 1px solid #CCC;
+  cursor: pointer;
+  font-size: 13px;
+  margin: 10px 0;
+  padding: 7px 10px;
+}
+
 .game {
   background: red;
   border-radius: $border-radius * 2;

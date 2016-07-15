@@ -38,7 +38,10 @@ update message model =
                 |> List.head
                 |> addPoint model
 
-        _ ->
+        ResetGame ->
+            init
+
+        Noop ->
             ( model, Cmd.none )
 
 

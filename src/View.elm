@@ -2,6 +2,7 @@ module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Action exposing (Action)
 import Dict
 import Model exposing (Model)
@@ -16,6 +17,7 @@ view : Model -> Html Action
 view model =
     div []
         [ h1 [] [ text "elm-2048" ]
+        , button [ class "btn", onClick Action.ResetGame ] [ text "Reset" ]
         , drawModel <| Dict.toList model.grid
         ]
 
