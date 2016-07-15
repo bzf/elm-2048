@@ -18,13 +18,37 @@ view model =
     div []
         [ h1 [] [ text "elm-2048" ]
         , button [ class "btn", onClick Action.ResetGame ] [ text "Reset" ]
-        , drawModel <| Dict.toList model.grid
+        , drawModel model
         ]
 
 
-drawModel : List Cell -> Html Action
-drawModel cells =
+drawModel : Model -> Html Action
+drawModel model =
+    div []
+        [ drawGame model
+        , maybeDrawGameOverOverlay model
+        ]
+
+
+maybeDrawGameOverOverlay : Model -> Html Action
+maybeDrawGameOverOverlay model =
+    case model.gameOver of
+        True ->
+            div [ class "game--over" ]
+                [ h1 [] [ text "Game over!" ]
+                , button [ onClick Action.ResetGame, class "btn" ] [ text "Play again" ]
+                ]
+
+        False ->
+            div [] []
+
+
+drawGame : Model -> Html Action
+drawGame model =
     let
+        cells =
+            Dict.toList model.grid
+
         filterRow index =
             List.filter (\( ( x, y ), _ ) -> y == index)
     in

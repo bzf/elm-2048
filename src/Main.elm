@@ -33,10 +33,17 @@ update message model =
             Model.update model direction
 
         AddCell randomIndex ->
-            Grid.availableCells model.grid
-                |> List.drop randomIndex
-                |> List.head
-                |> addPoint model
+            let
+                model' =
+                    Grid.availableCells model.grid
+                        |> List.drop randomIndex
+                        |> List.head
+                        |> addPoint model
+
+                gameOver' =
+                    Grid.isGameOver model'.grid
+            in
+                ( { model' | gameOver = gameOver' }, Cmd.none )
 
         ResetGame ->
             init
@@ -45,16 +52,14 @@ update message model =
             ( model, Cmd.none )
 
 
-addPoint : Model -> Maybe Point -> ( Model, Cmd Action )
+addPoint : Model -> Maybe Point -> Model
 addPoint model point =
     case point of
         Just point' ->
-            ( { model | grid = Grid.addPointToGrid model.grid point' }
-            , Cmd.none
-            )
+            { model | grid = Grid.addPointToGrid model.grid point' }
 
         Nothing ->
-            ( model, Cmd.none )
+            model
 
 
 subscriptions : Model -> Sub Action
