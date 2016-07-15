@@ -10,8 +10,12 @@ type alias Point =
     ( Int, Int )
 
 
+type alias Cell =
+    { value : Int }
+
+
 type alias Grid =
-    Dict Point Int
+    Dict Point Cell
 
 
 new : Grid
@@ -136,7 +140,7 @@ availableCells grid =
         |> List.filter (\point -> not <| Dict.member point grid)
 
 
-columns : Grid -> List (List ( Point, Int ))
+columns : Grid -> List (List ( Point, Cell ))
 columns grid =
     grid
         |> Dict.toList
@@ -145,7 +149,7 @@ columns grid =
         |> List.map (List.sortBy (\cell -> snd (fst cell)))
 
 
-rows : Grid -> List (List ( Point, Int ))
+rows : Grid -> List (List ( Point, Cell ))
 rows grid =
     grid
         |> Dict.toList
@@ -154,7 +158,7 @@ rows grid =
         |> List.map (List.sortBy (\cell -> fst (fst cell)))
 
 
-mergeCellsVertical : List ( Point, Int ) -> List ( Point, Int )
+mergeCellsVertical : List ( Point, Cell ) -> List ( Point, Cell )
 mergeCellsVertical list =
     case list of
         [] ->
@@ -164,13 +168,20 @@ mergeCellsVertical list =
             [ v ]
 
         x :: y :: rest ->
-            if (snd x) == (snd y) then
-                ( (fst x), (snd x) * 2 ) :: (mergeCellsVertical rest)
-            else
-                List.append [ x ] (mergeCellsVertical (y :: rest))
+            let
+                xval =
+                    snd x
+
+                yval =
+                    snd y
+            in
+                if xval == yval then
+                    ( (fst x), { xval | value = xval.value * 2 } ) :: (mergeCellsVertical rest)
+                else
+                    List.append [ x ] (mergeCellsVertical (y :: rest))
 
 
-mergeCells : List ( Point, Int ) -> List ( Point, Int )
+mergeCells : List ( Point, Cell ) -> List ( Point, Cell )
 mergeCells list =
     case list of
         [] ->
@@ -180,12 +191,19 @@ mergeCells list =
             [ v ]
 
         x :: y :: rest ->
-            if (snd x) == (snd y) then
-                ( (fst x), (snd x) * 2 ) :: (mergeCells rest)
-            else
-                List.append [ x ] (mergeCells (y :: rest))
+            let
+                xval =
+                    snd x
+
+                yval =
+                    snd y
+            in
+                if xval.value == yval.value then
+                    ( (fst x), { xval | value = xval.value * 2 } ) :: (mergeCells rest)
+                else
+                    List.append [ x ] (mergeCells (y :: rest))
 
 
 addPointToGrid : Grid -> Point -> Grid
 addPointToGrid grid point =
-    Dict.insert point 2 grid
+    Dict.insert point { value = 2 } grid

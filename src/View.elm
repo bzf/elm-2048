@@ -10,7 +10,7 @@ import Grid exposing (Point)
 
 
 type alias Cell =
-    ( Point, Int )
+    ( Point, { value : Int } )
 
 
 view : Model -> Html Action
@@ -58,7 +58,9 @@ drawCell maybeCell =
         Just cell ->
             let
                 value =
-                    toString <| snd cell
+                    snd cell
+                        |> (\x -> x.value)
+                        |> toString
             in
                 div [ class <| "game__cell game__cell--" ++ value ]
                     [ text value ]
