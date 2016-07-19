@@ -1,12 +1,21 @@
+$cell-size: 105px;
+$border-size: 10px;
+$border-radius: 3px;
+
 body {
   background: #faf8ef;
   color: #776e65;
   font-family: "Source Sans Pro", sans-serif;
 }
 
-$cell-size: 105px;
-$border-size: 10px;
-$border-radius: 3px;
+
+h1 {
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+}
 
 .btn {
   background: white;
@@ -21,9 +30,12 @@ $border-radius: 3px;
 .container {
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  width: 470px;
 }
 
 .game {
+  position: absolute;
   background: #bbada0;
   border-radius: $border-radius * 2;
   padding: $border-size;
@@ -32,6 +44,7 @@ $border-radius: 3px;
   height: 450px;
 
   &--over {
+    position: absolute;
     align-items: center;
     background: rgba(238, 228, 218, 0.73);
     border-radius: $border-radius * 2;

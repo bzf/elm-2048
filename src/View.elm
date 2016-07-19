@@ -17,8 +17,8 @@ view : Model -> Html Action
 view model =
     div [ class "container" ]
         [ h1 [] [ text "elm-2048" ]
+        , p [] [ text "Press 'R' to restart" ]
         , div [] [ drawModel model ]
-        , button [ class "btn", onClick Action.ResetGame ] [ text "Reset" ]
         ]
 
 

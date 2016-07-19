@@ -75,26 +75,17 @@ onKeyDown on _ keycode =
         37 ->
             OnMove Left
 
-        72 ->
-            OnMove Left
-
         39 ->
             OnMove Right
-
-        76 ->
-            OnMove Right
-
-        75 ->
-            OnMove Up
 
         38 ->
             OnMove Up
 
-        74 ->
-            OnMove Down
-
         40 ->
             OnMove Down
+
+        82 ->
+            ResetGame
 
         _ ->
             Noop
