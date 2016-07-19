@@ -11,14 +11,20 @@ import Grid exposing (Grid, Point)
 type alias Model =
     { grid : Grid
     , lastMove : Maybe Direction
+    , gameOver : Bool
     }
 
 
 new : Model
 new =
-    { grid = Grid.new
-    , lastMove = Nothing
-    }
+    let
+        grid' =
+            Grid.new
+    in
+        { grid = grid'
+        , lastMove = Nothing
+        , gameOver = Grid.isGameOver grid'
+        }
 
 
 update : Model -> Direction -> ( Model, Cmd Action )
@@ -30,7 +36,11 @@ update model direction =
                 |> Grid.moveEverything direction
 
         model' =
-            { model | lastMove = Just direction, grid = grid' }
+            { model
+                | lastMove = Just direction
+                , grid = grid'
+                , gameOver = Grid.isGameOver grid'
+            }
     in
         triggerAddCell model'
 

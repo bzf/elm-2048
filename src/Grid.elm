@@ -207,3 +207,20 @@ mergeCells list =
 addPointToGrid : Grid -> Point -> Grid
 addPointToGrid grid point =
     Dict.insert point { value = 2 } grid
+
+
+isGameOver : Grid -> Bool
+isGameOver grid =
+    let
+        isGridFull =
+            Dict.size grid == 16
+
+        noValidMovesLeft =
+            List.all (\x -> x)
+                [ (handleUp grid) == grid
+                , (handleDown grid) == grid
+                , (handleLeft grid) == grid
+                , (handleRight grid) == grid
+                ]
+    in
+        isGridFull && noValidMovesLeft

@@ -8,8 +8,8 @@ $border-radius: 3px;
 
 .btn {
   background: white;
-  border-radius: $border-radius;
   border: 1px solid #CCC;
+  border-radius: $border-radius;
   cursor: pointer;
   font-size: 13px;
   margin: 10px 0;
@@ -21,6 +21,19 @@ $border-radius: 3px;
   border-radius: $border-radius * 2;
   padding: $border-size;
   position: absolute;
+
+  &--over {
+    align-items: center;
+    background: rgba(0, 0, 0, .8);
+    border-radius: $border-radius * 2;
+    color: white;
+    display: flex;
+    height: 470px;
+    justify-content: center;
+    position: absolute;
+    width: 470px;
+    z-index: 10;
+  }
 
   &__row {
     display: flex;
