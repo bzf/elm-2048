@@ -1,10 +1,21 @@
-body {
-  font-family: "Source Sans Pro", sans-serif;
-}
-
 $cell-size: 105px;
 $border-size: 10px;
 $border-radius: 3px;
+
+body {
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+
+h1 {
+  margin-bottom: 0;
+}
+
+p {
+  margin-top: 0;
+}
 
 .btn {
   background: white;
@@ -16,23 +27,37 @@ $border-radius: 3px;
   padding: 7px 10px;
 }
 
+.container {
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  width: 470px;
+}
+
 .game {
-  background: red;
+  position: absolute;
+  background: #bbada0;
   border-radius: $border-radius * 2;
   padding: $border-size;
-  position: absolute;
+  margin: 0 auto;
+  width: 450px;
+  height: 450px;
 
   &--over {
+    position: absolute;
     align-items: center;
-    background: rgba(0, 0, 0, .8);
+    background: rgba(238, 228, 218, 0.73);
     border-radius: $border-radius * 2;
-    color: white;
     display: flex;
+    flex-direction: column;
     height: 470px;
     justify-content: center;
-    position: absolute;
     width: 470px;
     z-index: 10;
+
+    .btn {
+      display: block;
+    }
   }
 
   &__row {
@@ -46,34 +71,81 @@ $border-radius: 3px;
   }
 
   &__cell {
-    border-radius: $border-radius;
-    height: $cell-size;
-    width: $cell-size;
-    background: yellow;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    margin-right: $border-size;
-
+    background: yellow;
+    border-radius: $border-radius;
+    display: flex;
     font-size: 42px;
     font-weight: bold;
+    height: $cell-size;
+    justify-content: center;
+    margin-right: $border-size;
+    width: $cell-size;
 
     &:last-child {
       margin-right: 0;
     }
 
     &--2 {
-      background: black;
-      color: white;
+      background: #eee4da;
     }
 
     &--4 {
-      background: white;
-      color: black;
+      background: #ede0c8;
+    }
+
+    &--8 {
+      background: #f2b179;
+      color: #f9f6f2;
+    }
+
+    &--16 {
+      background: #f59563;
+      color: #f9f6f2;
+    }
+
+    &--32 {
+      background: #f67c5f;
+      color: #f9f6f2;
+    }
+
+    &--64 {
+      background: #f65e3b;
+      color: #f9f6f2;
+    }
+
+    &--128 {
+      background: #edcf72;
+      color: #f9f6f2;
+    }
+
+    &--256 {
+      background: #edcc61;
+      color: #f9f6f2;
+    }
+
+    &--512 {
+      background: #edc850;
+      color: #f9f6f2;
+    }
+
+    &--1024 {
+      background: #edc53f;
+      color: #f9f6f2;
+    }
+
+    &--2048 {
+      background: #edc22e;
+      color: #f9f6f2;
+    }
+
+    &--uber {
+      background: #3c3a32;
+      color: #f9f6f2;
     }
 
     &--empty {
-      background: pink;
+      background: #cdc1b4;
     }
   }
 }

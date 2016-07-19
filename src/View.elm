@@ -15,10 +15,10 @@ type alias Cell =
 
 view : Model -> Html Action
 view model =
-    div []
+    div [ class "container" ]
         [ h1 [] [ text "elm-2048" ]
-        , button [ class "btn", onClick Action.ResetGame ] [ text "Reset" ]
-        , drawModel model
+        , p [] [ text "Press 'R' to restart" ]
+        , div [] [ drawModel model ]
         ]
 
 
