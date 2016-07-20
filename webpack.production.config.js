@@ -1,18 +1,11 @@
 var webpack = require("webpack");
 
 module.exports = {
-  entry: {
-    app: ["webpack/hot/dev-server", "./src/index.js"],
-  },
+  entry: __dirname + "/src" + "/index.js",
 
   output: {
-    path: "./dist",
+    path: __dirname + "/dist",
     filename: "bundle.js",
-    publicPath: "http://localhost:8080/"
-  },
-
-  devServer: {
-    contentBase: "./public",
   },
 
   module: {
@@ -21,10 +14,6 @@ module.exports = {
         test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
         loaders: ["elm-hot", "elm-webpack"]
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        loaders: ["file-loader"]
       },
       {
         test: /\.scss$/,

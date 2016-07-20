@@ -1,3 +1,8 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
 dependencies:
   cache_directories:
     - elm-stuff/build-artifacts
@@ -15,3 +20,10 @@ dependencies:
 test:
   override:
     - npm test
+
+deployment:
+  pages:
+    branch: [master]
+    commands:
+      - ./bin/build.sh
+      - ./bin/deploy.sh
