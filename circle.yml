@@ -10,7 +10,7 @@ dependencies:
 
   post:
     - npm i -g elm
-    - elm-package install -y
+    - elm-package install
 
     # Build the project once so that we can cache the build artifacts inside
     # `elm-stuff/build-artifacts`
